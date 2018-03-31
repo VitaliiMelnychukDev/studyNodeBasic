@@ -1,5 +1,5 @@
-var english = require('./english');
-var spanish = require('./spanish');
+let english = require('./english');
+let spanish = require('./spanish');
 
 module.exports = {
     english: english,
