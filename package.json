@@ -1,0 +1,8 @@
+{
+  "name": "studyNodeBasic",
+  "version": "0.0.1",
+  "description": "Test node js end express",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
