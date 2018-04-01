@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Test node js end express",
   "dependencies": {
+    "ejs": "^2.5.8",
     "express": "^4.16.3"
   }
 }
