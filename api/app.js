@@ -2,9 +2,14 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const env = require('../nodemon');
 
 const productRoutes = require('./routes/products');
 const orderRoutes = require('./routes/orders');
+
+
+mongoose.connect('mongodb+srv://root:' + env.env.PASSWORD + '@node-api-uztuy.mongodb.net/test');
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
