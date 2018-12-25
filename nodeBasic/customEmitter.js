@@ -7,10 +7,10 @@ Emitter.prototype.on = function (type, listener) {
     this.events[type].push(listener);
 };
 
-Emitter.prototype.emit = function (type) {
+Emitter.prototype.emit = function (type, args = []) {
     if (this.events[type]) {
         this.events[type].forEach(function (listener) {
-            listener()
+            listener.apply(this, args);
         });
     }
 };

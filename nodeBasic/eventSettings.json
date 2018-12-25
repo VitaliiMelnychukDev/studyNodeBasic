@@ -1,0 +1,6 @@
+{
+  "events": {
+    "HELLO": "hello",
+    "LOG": "log"
+  }
+}

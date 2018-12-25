@@ -1,51 +1,47 @@
-let CustomEmitter = require('./customEmitter');
-let CoreEmitter = require('events');
-let settings = require('./settings');
-let util = require('util');
+const CustomEmitter = require("./customEmitter");
+const CoreEmitter = require("events");
+const eventSettings = require("./eventSettings");
+const util = require("util");
 
-
-let customEmitterObj = new CustomEmitter();
-let coreEmitterObj = new CoreEmitter();
-
-function helloFunction1() {
-    console.log('Hello message1');
-}
-
-function helloFunction2() {
-    console.log('Hello message2');
+function printGreeting() {
+    console.log("Hello!");
 }
 
 function logFunction(data) {
     console.log(data);
 }
 
-customEmitterObj.on(settings.events.HELLO, helloFunction1);
-coreEmitterObj.on(settings.events.HELLO, helloFunction1);
+//Using custom emitter
+const customEmitterObj = new CustomEmitter();
+customEmitterObj.on(eventSettings.events.HELLO, printGreeting);
+customEmitterObj.on(eventSettings.events.LOG, logFunction);
+customEmitterObj.emit(eventSettings.events.HELLO);
+customEmitterObj.emit(eventSettings.events.LOG, ["Log: emit log function"]);
 
-customEmitterObj.on(settings.events.HELLO, helloFunction2);
-coreEmitterObj.on(settings.events.HELLO, helloFunction2);
+//Using core emitter
+const coreEmitterObj = new CoreEmitter();
+coreEmitterObj.on(eventSettings.events.HELLO, printGreeting);
+coreEmitterObj.emit(eventSettings.events.HELLO);
 
-function OwnEmitter() {
-    CoreEmitter.call(this);
+//Create own emitter that inherit core Event module
+class OwnEmitter extends CoreEmitter {
+    constructor() {
+        super();
+    }
+
+    hello() {
+        this.emit(eventSettings.events.HELLO);
+    }
+
+    log(data) {
+        this.emit(eventSettings.events.LOG, data);
+    }
 }
 
-util.inherits(OwnEmitter, CoreEmitter);
+const ownEmitterObj = new OwnEmitter();
+ownEmitterObj.on(eventSettings.events.HELLO, printGreeting);
+ownEmitterObj.on(eventSettings.events.LOG, logFunction);
 
-OwnEmitter.prototype.hello = function () {
-    this.emit(settings.events.HELLO);
-};
-
-OwnEmitter.prototype.log = function (data) {
-    this.emit(settings.events.LOG, data);
-};
-
-let ownEmitterObj = new OwnEmitter();
-
-ownEmitterObj.on(settings.events.HELLO, helloFunction1);
-ownEmitterObj.on(settings.events.LOG, logFunction);
-
-customEmitterObj.emit(settings.events.HELLO);
-coreEmitterObj.emit(settings.events.HELLO);
 ownEmitterObj.hello();
-ownEmitterObj.log({text: "test"});
+ownEmitterObj.log("Log: emit ownEmitter log function");
 
