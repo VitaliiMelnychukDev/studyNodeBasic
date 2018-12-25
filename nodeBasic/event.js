@@ -1,7 +1,6 @@
 const CustomEmitter = require("./customEmitter");
 const CoreEmitter = require("events");
 const eventSettings = require("./eventSettings");
-const util = require("util");
 
 function printGreeting() {
     console.log("Hello!");
