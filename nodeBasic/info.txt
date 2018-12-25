@@ -1,0 +1,15 @@
+1. V8 - it is Chrome javascript core. Node js have V8 embedded within.
+
+2. require
+require wrap modules code in next way:
+(function(exports, require, module, __filename, __dirname) {
+    //module code
+});
+Then this module is executing and return module.exports
+
+require first search file than folder.
+
+require('test'); - it folder greet has file index.js then this file will be executed.
+
+3. libuv -  is a multi-platform C library, developer for node.js, that provides support
+ for asynchronous I/O based on event loops. It allows work with files anf network;
