@@ -1,11 +1,11 @@
-const mongoose = require('mongoose');
-const Product = require('../models/product');
-const config = require('../../config');
+const mongoose = require("mongoose");
+const Product = require("../models/product");
+const config = require("../../config");
 
 
 module.exports.getAllProducts = (req, res, next) => {
     Product.find()
-        .select('name price _id productImage')
+        .select("name price _id productImage")
         .then(products => {
             const response = {
                 count: products.length,
@@ -15,8 +15,8 @@ module.exports.getAllProducts = (req, res, next) => {
                         price: product.price,
                         _id: product._id,
                         request: {
-                            type: 'GET',
-                            url: config.BASE_URL + 'products/' + product._id
+                            type: "GET",
+                            url: config.BASE_URL + "products/" + product._id
                         }
                     }
                 })
@@ -37,15 +37,15 @@ module.exports.createProducts = (req, res, next) => {
     });
     product.save().then(result => {
         res.status(201).json({
-            message: 'Product created successfully',
+            message: "Product created successfully",
             createdProduct: {
                 _id: result._id,
                 name: result.name,
                 price: result.price,
                 productImage: result.productImage,
                 request: {
-                    type: 'GET',
-                    url: config.BASE_URL + 'products/' + result._id
+                    type: "GET",
+                    url: config.BASE_URL + "products/" + result._id
                 }
             }
         });
@@ -57,14 +57,14 @@ module.exports.createProducts = (req, res, next) => {
 module.exports.getProduct = (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id)
-        .select('name price _id productImage')
+        .select("name price _id productImage")
         .then(product => {
             if (product) {
                 res.status(200).json({
                     product: product,
                     request: {
-                        type: 'GET',
-                        url: config.BASE_URL + 'products/'
+                        type: "GET",
+                        url: config.BASE_URL + "products/"
                     }
                 });
             } else {
@@ -85,10 +85,10 @@ module.exports.updateProduct = (req, res, next) => {
     }
     Product.update({_id: id}, {$set: updateOps}).then(result => {
         res.status(200).json({
-            message: 'Product updated successfully!',
+            message: "Product updated successfully!",
             request: {
-                type: 'GET',
-                url: config.BASE_URL + 'products/' + id
+                type: "GET",
+                url: config.BASE_URL + "products/" + id
             }
         })
     }).catch(err => {

@@ -1,12 +1,12 @@
-const mongoose = require('mongoose');
-const Order = require('../models/order');
-const Product = require('../models/product');
-const config = require('../../config');
+const mongoose = require("mongoose");
+const Order = require("../models/order");
+const Product = require("../models/product");
+const config = require("../../config");
 
 module.exports.ordersGetAll = (req, res, next) => {
     Order.find()
-        .select('product quantity _id')
-        .populate('product', 'name')
+        .select("product quantity _id")
+        .populate("product", "name")
         .then(orders => {
             res.status(200).json({
                 count: orders.length,
@@ -16,8 +16,8 @@ module.exports.ordersGetAll = (req, res, next) => {
                         quantity: order.quantity,
                         _id: order._id,
                         request: {
-                            type: 'GET',
-                            url: config.BASE_URL + 'orders/' + order._id
+                            type: "GET",
+                            url: config.BASE_URL + "orders/" + order._id
                         }
                     }
                 })
@@ -53,8 +53,8 @@ module.exports.orderCreate = (req, res, next) => {
                 quantity: result.quantity
             },
             request: {
-                type: 'GET',
-                url: config.BASE_URL + 'orders/'
+                type: "GET",
+                url: config.BASE_URL + "orders/"
             }
         });
     }).catch(err => {
@@ -64,15 +64,15 @@ module.exports.orderCreate = (req, res, next) => {
 
 module.exports.getOrder = (req, res, next) => {
     Order.findById(req.params.orderId)
-        .select('product quantity _id')
-        .populate('product', 'name _id')
+        .select("product quantity _id")
+        .populate("product', 'name _id")
         .then(order => {
             if (order) {
                 res.status(200).json({
                     order: order,
                     request: {
-                        type: 'GET',
-                        url: config.BASE_URL + 'orders/'
+                        type: "GET",
+                        url: config.BASE_URL + "orders/"
                     }
 
                 });
